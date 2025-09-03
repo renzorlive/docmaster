@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Mobile Responsiveness Test - VimMaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .test-section {
+            margin: 2rem 0;
+            padding: 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+        }
+        .test-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .breakpoint-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="breakpoint-info" id="breakpoint-info">
+        Screen: <span id="screen-width"></span>px
+    </div>
+
+    <!-- Header Test -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">V</div>
+                <div>
+                    <div class="vim-logo">VimMaster</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">Mobile Test</div>
+                </div>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Levels</a>
+                <a href="#" class="nav-link">Commands</a>
+                <a href="#" class="btn btn-primary">GitHub</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: 0.5rem;">🌙</button>
+            </div>
+            
+            <button id="mobile-menu-btn" class="mobile-menu-btn btn btn-secondary">☰</button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Test -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-header">
+            <h2>Menu</h2>
+            <button id="mobile-close" class="btn btn-secondary">✕</button>
+        </div>
+        <nav>
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Levels</a>
+            <a href="#" class="nav-link">Commands</a>
+            <a href="#" class="btn btn-primary">GitHub</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="test-section">
+            <div class="test-title">Hero Section Test</div>
+            <section class="hero">
+                <div class="container">
+                    <pre class="ascii-logo">
+██╗   ██╗██╗███╗   ███╗    ███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ 
+██║   ██║██║████╗ ████║    ████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗
+██║   ██║██║██╔████╔██║    ██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝
+╚██╗ ██╔╝██║██║╚██╔╝██║    ██║╚██╔╝██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗
+ ╚████╔╝ ██║██║ ╚═╝ ██║    ██║ ╚═╝ ██║██║  ██║███████║   ██║   ███████╗██║  ██║
+  ╚═══╝  ╚═╝╚═╝     ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+                    </pre>
+                    <h1 class="hero-title holographic">Mobile Responsiveness Test</h1>
+                    <p class="hero-subtitle">
+                        Testing all mobile breakpoints and responsive design elements across different screen sizes.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary">Primary Button</a>
+                        <a href="#" class="btn btn-secondary">Secondary Button</a>
+                    </div>
+                    
+                    <!-- Stats Test -->
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
+                            </svg>
+                            <span class="stat-number" data-count="2500">2,500</span>
+                            <span class="stat-label">Stars</span>
+                        </div>
+                        <div class="stat-card">
+                            <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16,4C15.71,4 15.43,4.09 15.21,4.29L13.85,5.64L18.36,10.15L19.71,8.79C20.1,8.4 20.1,7.77 19.71,7.38L16.62,4.29C16.4,4.09 16.11,4 15.83,4H16M13.13,6.36L4,15.5V20H8.5L17.64,10.87L13.13,6.36Z"/>
+                            </svg>
+                            <span class="stat-number" data-count="150">150</span>
+                            <span class="stat-label">Contributors</span>
+                        </div>
+                        <div class="stat-card">
+                            <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                            </svg>
+                            <span class="stat-number" data-count="10000">10,000</span>
+                            <span class="stat-label">Users</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">Grid Layout Test</div>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>Grid Item 1</h3>
+                    <p>Testing responsive grid layout with auto-fit columns.</p>
+                </div>
+                <div class="card">
+                    <h3>Grid Item 2</h3>
+                    <p>Should stack on mobile and expand on larger screens.</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-3" style="margin-top: 2rem;">
+                <div class="card">
+                    <h3>3-Column Item 1</h3>
+                    <p>Testing 3-column grid responsiveness.</p>
+                </div>
+                <div class="card">
+                    <h3>3-Column Item 2</h3>
+                    <p>Should be single column on mobile.</p>
+                </div>
+                <div class="card">
+                    <h3>3-Column Item 3</h3>
+                    <p>Proper spacing and alignment test.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">Features Grid Test</div>
+            <div class="features-grid">
+                <div class="feature-card card-3d morph-shape">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        <h3>Feature 1</h3>
+                    </div>
+                    <p>Testing feature card responsiveness with icons and text.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95" style="width: 95%;"></div>
+                        <span class="skill-text">95% Complete</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card card-3d morph-shape">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+                        </svg>
+                        <h3>Feature 2</h3>
+                    </div>
+                    <p>Another feature card to test grid layout behavior.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="88" style="width: 88%;"></div>
+                        <span class="skill-text">88% Modular</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">Table Responsiveness Test</div>
+            <table class="param-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>content</code></td>
+                        <td><code>string[]</code></td>
+                        <td>Array of text lines in the editor</td>
+                    </tr>
+                    <tr>
+                        <td><code>cursor</code></td>
+                        <td><code>{row: number, col: number}</code></td>
+                        <td>Current cursor position (0-indexed)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">Code Block Test</div>
+            <div class="code-block">
+<pre><span class="comment">// Test code block responsiveness</span>
+<span class="keyword">const</span> gameState = <span class="keyword">new</span> GameState();
+gameState.content = [<span class="string">"Hello, World!"</span>, <span class="string">"Welcome to VimMaster"</span>];
+gameState.cursor = { row: 0, col: 7 };
+gameState.mode = <span class="string">'INSERT'</span>;</pre>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">Search Component Test</div>
+            <div class="search-container">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        placeholder="Search commands..."
+                        class="search-input"
+                    >
+                    <div class="search-icon">🔍</div>
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active">All</button>
+                    <button class="filter-tab">Movement</button>
+                    <button class="filter-tab">Editing</button>
+                    <button class="filter-tab">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Command Palette Test -->
+    <div id="command-palette" class="command-palette">
+        <div class="command-palette-backdrop"></div>
+        <div class="command-palette-content">
+            <input 
+                type="text" 
+                id="command-input" 
+                class="command-input" 
+                placeholder="Type a command..."
+            >
+            <div id="command-results" class="command-results">
+                <div class="command-section-title">Test Commands</div>
+                <div class="command-result">
+                    <div class="command-icon">🏠</div>
+                    <div class="command-content">
+                        <div class="command-name">Home</div>
+                        <div class="command-description">Go to homepage</div>
+                    </div>
+                    <div class="command-category-badge">navigation</div>
+                    <div class="command-shortcut">↵</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Display current screen width
+        function updateBreakpointInfo() {
+            const width = window.innerWidth;
+            document.getElementById('screen-width').textContent = width;
+            
+            let breakpoint = 'XS';
+            if (width >= 1024) breakpoint = 'XL';
+            else if (width >= 768) breakpoint = 'LG';
+            else if (width >= 640) breakpoint = 'MD';
+            else if (width >= 480) breakpoint = 'SM';
+            
+            document.getElementById('breakpoint-info').innerHTML = 
+                `Screen: ${width}px (${breakpoint})`;
+        }
+        
+        updateBreakpointInfo();
+        window.addEventListener('resize', updateBreakpointInfo);
+        
+        // Test command palette
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'p' && e.ctrlKey) {
+                e.preventDefault();
+                document.getElementById('command-palette').classList.toggle('active');
+            }
+        });
+    </script>
+</body>
+</html>

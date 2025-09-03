@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Developer API - VimMaster Documentation</title>
+    <meta name="description" content="Complete developer documentation for contributing to VimMaster. Architecture, APIs, and contribution guidelines.">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">V</div>
+                <div>
+                    <div class="vim-logo">VimMaster</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">Developer API</div>
+                </div>
+            </a>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="levels.html" class="nav-link">Levels</a>
+                <a href="commands.html" class="nav-link">Commands</a>
+                <a href="https://github.com/renzorlive/vimmaster" class="btn btn-primary">GitHub</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: 0.5rem;">🌙</button>
+            </div>
+            
+            <button id="mobile-menu-btn" class="mobile-menu-btn btn btn-secondary">☰</button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="flex justify-between items-center mb-8">
+            <h2>Menu</h2>
+            <button id="mobile-close" class="btn btn-secondary">✕</button>
+        </div>
+        <nav class="space-y-4">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="levels.html" class="nav-link">Levels</a>
+            <a href="commands.html" class="nav-link">Commands</a>
+            <a href="https://github.com/renzorlive/vimmaster" class="btn btn-primary">GitHub</a>
+        </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Developer Documentation</h1>
+            <p class="hero-subtitle">
+                Complete guide for contributing to VimMaster. Architecture overview, APIs, and development setup.
+            </p>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="section">
+        <div class="container">
+            <div class="toc">
+                <h3>📋 Table of Contents</h3>
+                <div class="grid grid-3">
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; font-weight: 600;">Getting Started</h4>
+                        <ul>
+                            <li><a href="#setup">Development Setup</a></li>
+                            <li><a href="#architecture">Project Architecture</a></li>
+                            <li><a href="#file-structure">File Structure</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; font-weight: 600;">Core APIs</h4>
+                        <ul>
+                            <li><a href="#game-state">Game State Management</a></li>
+                            <li><a href="#level-system">Level System</a></li>
+                            <li><a href="#vim-engine">Vim Engine</a></li>
+                            <li><a href="#ui-system">UI System</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; font-weight: 600;">Contributing</h4>
+                        <ul>
+                            <li><a href="#adding-levels">Adding New Levels</a></li>
+                            <li><a href="#vim-commands">Implementing Commands</a></li>
+                            <li><a href="#testing">Testing Guidelines</a></li>
+                            <li><a href="#pull-requests">Pull Request Process</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Setup -->
+    <section id="setup" class="section bg-alt">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">🚀 Development Setup</h2>
+                
+                <div class="card mb-8">
+                    <h3 style="margin-bottom: 1rem;">Prerequisites</h3>
+                    <ul style="margin-bottom: 1.5rem;">
+                        <li>Modern web browser (Chrome, Firefox, Safari, Edge)</li>
+                        <li>Text editor with JavaScript support</li>
+                        <li>Basic knowledge of HTML, CSS, and JavaScript</li>
+                        <li>Git for version control</li>
+                    </ul>
+                    
+                    <h3 style="margin-bottom: 1rem;">Quick Start</h3>
+                    <div class="code-block">
+<pre><span class="comment"># Clone the repository</span>
+git clone https://github.com/renzorlive/vimmaster.git
+cd vimmaster
+
+<span class="comment"># Switch to development branch</span>
+git checkout advanced-testing
+
+<span class="comment"># Open in browser</span>
+open index.html  <span class="comment"># macOS</span>
+start index.html <span class="comment"># Windows</span>
+xdg-open index.html <span class="comment"># Linux</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Architecture -->
+    <section id="architecture" class="section">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">🏗️ Project Architecture</h2>
+                
+                <div class="card mb-8">
+                    <h3 style="margin-bottom: 1rem;">Core Modules</h3>
+                    <p style="margin-bottom: 1.5rem;">VimMaster is built with a modular architecture where each module has a specific responsibility:</p>
+                    
+                    <div class="code-block mb-6">
+<pre><span class="comment">// Main application modules</span>
+js/
+├── <span class="string">main.js</span>              <span class="comment">// Application entry point and initialization</span>
+├── <span class="string">game-state.js</span>        <span class="comment">// Centralized state management</span>
+├── <span class="string">levels.js</span>            <span class="comment">// Level definitions and progression logic</span>
+├── <span class="string">vim-engine.js</span>        <span class="comment">// Core Vim command processing</span>
+├── <span class="string">ui-components.js</span>     <span class="comment">// UI rendering and user interactions</span>
+├── <span class="string">progress-system.js</span>   <span class="comment">// Progress tracking and persistence</span>
+├── <span class="string">challenge-mode.js</span>    <span class="comment">// Timed challenges and competitions</span>
+└── <span class="string">cheat-mode.js</span>        <span class="comment">// Hint system and help functionality</span></pre>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 1rem;">Data Flow</h3>
+                    <div class="code-block">
+<pre><span class="comment">// Typical command execution flow</span>
+User Input → Vim Engine → Game State → UI Update → Level Validation</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- File Structure -->
+    <section id="file-structure" class="section bg-alt">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">📁 File Structure</h2>
+                
+                <div class="card">
+                    <div class="code-block">
+<pre>vimmaster/
+├── <span class="string">index.html</span>           <span class="comment"># Main game interface</span>
+├── <span class="string">css/</span>
+│   └── <span class="string">main.css</span>         <span class="comment"># Game styling and themes</span>
+├── <span class="string">js/</span>                  <span class="comment"># Core JavaScript modules</span>
+│   ├── <span class="string">main.js</span>          <span class="comment"># App initialization</span>
+│   ├── <span class="string">game-state.js</span>    <span class="comment"># State management</span>
+│   ├── <span class="string">levels.js</span>        <span class="comment"># Level definitions</span>
+│   ├── <span class="string">vim-engine.js</span>    <span class="comment"># Vim command processor</span>
+│   ├── <span class="string">ui-components.js</span> <span class="comment"># UI components</span>
+│   ├── <span class="string">progress-system.js</span> <span class="comment"># Progress tracking</span>
+│   ├── <span class="string">challenge-mode.js</span> <span class="comment"># Challenge system</span>
+│   └── <span class="string">cheat-mode.js</span>    <span class="comment"># Hint system</span>
+├── <span class="string">docs/</span>                <span class="comment"># Documentation website</span>
+├── <span class="string">tests/</span>               <span class="comment"># Test files</span>
+└── <span class="string">README.md</span>           <span class="comment"># Project overview</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game State API -->
+    <section id="game-state" class="section">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">🎮 Game State Management</h2>
+                
+                <div class="api-method">
+                    <h3>GameState Class</h3>
+                    <p>Centralized state management for the entire game. All game data flows through this class.</p>
+                    
+                    <div class="method-signature">
+<span class="keyword">class</span> GameState {
+  <span class="keyword">constructor</span>()
+  <span class="keyword">get</span> content()
+  <span class="keyword">set</span> content(lines)
+  <span class="keyword">get</span> cursor()
+  <span class="keyword">set</span> cursor(position)
+  <span class="keyword">get</span> mode()
+  <span class="keyword">set</span> mode(vimMode)
+}
+                    </div>
+                    
+                    <h4>Properties</h4>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>content</code></td>
+                                <td><code>string[]</code></td>
+                                <td>Array of text lines in the editor</td>
+                            </tr>
+                            <tr>
+                                <td><code>cursor</code></td>
+                                <td><code>{row: number, col: number}</code></td>
+                                <td>Current cursor position (0-indexed)</td>
+                            </tr>
+                            <tr>
+                                <td><code>mode</code></td>
+                                <td><code>'NORMAL' | 'INSERT' | 'VISUAL'</code></td>
+                                <td>Current Vim mode</td>
+                            </tr>
+                            <tr>
+                                <td><code>currentLevel</code></td>
+                                <td><code>number</code></td>
+                                <td>Current level index (0-based)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h4>Example Usage</h4>
+                    <div class="code-block">
+<pre><span class="comment">// Initialize game state</span>
+<span class="keyword">const</span> gameState = <span class="keyword">new</span> GameState();
+
+<span class="comment">// Set initial content</span>
+gameState.content = [
+  <span class="string">"Hello, World!"</span>,
+  <span class="string">"Welcome to VimMaster"</span>
+];
+
+<span class="comment">// Move cursor</span>
+gameState.cursor = { row: 0, col: 7 };
+
+<span class="comment">// Switch to insert mode</span>
+gameState.mode = <span class="string">'INSERT'</span>;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Level System -->
+    <section id="level-system" class="section bg-alt">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">📚 Level System</h2>
+                
+                <div class="api-method">
+                    <h3>Level Definition Structure</h3>
+                    <p>Each level is defined as an object with specific properties that control the learning experience.</p>
+                    
+                    <div class="method-signature">
+<span class="keyword">interface</span> Level {
+  name: <span class="keyword">string</span>
+  instructions: <span class="keyword">string</span>
+  initialContent: <span class="keyword">string[]</span>
+  targetContent?: <span class="keyword">string[]</span>
+  setup?: <span class="keyword">function</span>
+  validation: <span class="keyword">function</span>
+  hints?: <span class="keyword">string[]</span>
+}
+                    </div>
+                    
+                    <h4>Level Properties</h4>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>name</code></td>
+                                <td>Yes</td>
+                                <td>Display name for the level</td>
+                            </tr>
+                            <tr>
+                                <td><code>instructions</code></td>
+                                <td>Yes</td>
+                                <td>What the player needs to accomplish</td>
+                            </tr>
+                            <tr>
+                                <td><code>initialContent</code></td>
+                                <td>Yes</td>
+                                <td>Starting text content for the level</td>
+                            </tr>
+                            <tr>
+                                <td><code>validation</code></td>
+                                <td>Yes</td>
+                                <td>Function that returns true when level is complete</td>
+                            </tr>
+                            <tr>
+                                <td><code>setup</code></td>
+                                <td>No</td>
+                                <td>Function to initialize level-specific state</td>
+                            </tr>
+                            <tr>
+                                <td><code>hints</code></td>
+                                <td>No</td>
+                                <td>Array of progressive hints for the level</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adding New Levels -->
+    <section id="adding-levels" class="section">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">➕ Adding New Levels</h2>
+                
+                <div class="card mb-8">
+                    <h3 style="margin-bottom: 1rem;">Step-by-Step Guide</h3>
+                    
+                    <h4>1. Define the Level Object</h4>
+                    <div class="code-block mb-4">
+<pre><span class="comment">// Example: New level for teaching 'f' command</span>
+<span class="keyword">const</span> findCharacterLevel = {
+  name: <span class="string">"Find Character"</span>,
+  instructions: <span class="string">"Use 'f' followed by a character to jump to it. Find the 'x' in the line below."</span>,
+  
+  initialContent: [
+    <span class="string">"The quick brown fox jumps over the lazy dog"</span>
+  ],
+  
+  setup: <span class="keyword">function</span>(gameState) {
+    <span class="comment">// Set cursor to beginning of line</span>
+    gameState.cursor = { row: 0, col: 0 };
+    gameState.mode = <span class="string">'NORMAL'</span>;
+  },
+  
+  validation: <span class="keyword">function</span>(gameState) {
+    <span class="comment">// Check if cursor is on the 'x' character</span>
+    <span class="keyword">const</span> line = gameState.content[0];
+    <span class="keyword">const</span> cursorChar = line[gameState.cursor.col];
+    <span class="keyword">return</span> cursorChar === <span class="string">'x'</span> && gameState.usedFindCommand;
+  },
+  
+  hints: [
+    <span class="string">"Try typing 'f' followed by the character you want to find"</span>,
+    <span class="string">"The 'f' command moves the cursor to the next occurrence of a character"</span>,
+    <span class="string">"Type 'fx' to jump to the letter 'x'"</span>
+  ]
+};</pre>
+                    </div>
+                    
+                    <h4>2. Add to Levels Array</h4>
+                    <div class="code-block mb-4">
+<pre><span class="comment">// In levels.js, add your level to the levels array</span>
+<span class="keyword">const</span> levels = [
+  <span class="comment">// ... existing levels</span>
+  findCharacterLevel,
+  <span class="comment">// ... more levels</span>
+];</pre>
+                    </div>
+                    
+                    <h4>3. Test Your Level</h4>
+                    <div class="code-block">
+<pre><span class="comment">// Test the level by playing through it</span>
+<span class="comment">// Ensure validation works correctly</span>
+<span class="comment">// Check that hints are helpful</span>
+<span class="comment">// Verify the learning objective is clear</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vim Engine -->
+    <section id="vim-engine" class="section bg-alt">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">⚙️ Vim Engine</h2>
+                
+                <div class="api-method">
+                    <h3>Command Processing</h3>
+                    <p>The Vim engine processes keyboard input and executes Vim commands based on the current mode.</p>
+                    
+                    <div class="method-signature">
+<span class="keyword">class</span> VimEngine {
+  <span class="keyword">constructor</span>(gameState)
+  processKeypress(event)
+  executeCommand(command, mode)
+  handleNormalMode(key)
+  handleInsertMode(key)
+  handleVisualMode(key)
+}
+                    </div>
+                    
+                    <h4>Adding New Commands</h4>
+                    <div class="code-block">
+<pre><span class="comment">// Example: Adding the 'f' (find) command</span>
+handleNormalMode(key) {
+  <span class="keyword">switch</span>(key) {
+    <span class="keyword">case</span> <span class="string">'f'</span>:
+      <span class="comment">// Enter find mode, wait for next character</span>
+      <span class="keyword">this</span>.waitingForFindChar = <span class="keyword">true</span>;
+      <span class="keyword">break</span>;
+      
+    <span class="keyword">default</span>:
+      <span class="keyword">if</span> (<span class="keyword">this</span>.waitingForFindChar) {
+        <span class="keyword">this</span>.findCharacter(key);
+        <span class="keyword">this</span>.waitingForFindChar = <span class="keyword">false</span>;
+      }
+  }
+}
+
+findCharacter(char) {
+  <span class="keyword">const</span> currentLine = <span class="keyword">this</span>.gameState.content[<span class="keyword">this</span>.gameState.cursor.row];
+  <span class="keyword">const</span> startCol = <span class="keyword">this</span>.gameState.cursor.col + 1;
+  <span class="keyword">const</span> foundIndex = currentLine.indexOf(char, startCol);
+  
+  <span class="keyword">if</span> (foundIndex !== -1) {
+    <span class="keyword">this</span>.gameState.cursor = {
+      row: <span class="keyword">this</span>.gameState.cursor.row,
+      col: foundIndex
+    };
+    <span class="keyword">this</span>.gameState.usedFindCommand = <span class="keyword">true</span>;
+  }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testing Guidelines -->
+    <section id="testing" class="section">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">🧪 Testing Guidelines</h2>
+                
+                <div class="card mb-8">
+                    <h3 style="margin-bottom: 1rem;">Manual Testing Checklist</h3>
+                    <ul style="margin-bottom: 1.5rem;">
+                        <li>✅ Level loads with correct initial content</li>
+                        <li>✅ Instructions are clear and actionable</li>
+                        <li>✅ Validation triggers correctly when objective is met</li>
+                        <li>✅ Hints provide progressive guidance</li>
+                        <li>✅ Commands work as expected in real Vim</li>
+                        <li>✅ No console errors during gameplay</li>
+                        <li>✅ Progress saves correctly</li>
+                    </ul>
+                    
+                    <h3 style="margin-bottom: 1rem;">Testing New Commands</h3>
+                    <div class="code-block">
+<pre><span class="comment">// Test command in isolation</span>
+<span class="keyword">function</span> testFindCommand() {
+  <span class="keyword">const</span> gameState = <span class="keyword">new</span> GameState();
+  gameState.content = [<span class="string">"hello world"</span>];
+  gameState.cursor = { row: 0, col: 0 };
+  
+  <span class="comment">// Simulate 'fw' command</span>
+  <span class="keyword">const</span> engine = <span class="keyword">new</span> VimEngine(gameState);
+  engine.processKeypress({ key: <span class="string">'f'</span> });
+  engine.processKeypress({ key: <span class="string">'w'</span> });
+  
+  <span class="comment">// Verify cursor moved to 'w'</span>
+  console.assert(gameState.cursor.col === 6, <span class="string">"Find command failed"</span>);
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pull Request Process -->
+    <section id="pull-requests" class="section bg-alt">
+        <div class="container">
+            <div class="api-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">🔄 Pull Request Process</h2>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem;">Contribution Workflow</h3>
+                    
+                    <div class="code-block mb-4">
+<pre><span class="comment"># 1. Fork and clone the repository</span>
+git clone https://github.com/YOUR_USERNAME/vimmaster.git
+cd vimmaster
+
+<span class="comment"># 2. Create a feature branch</span>
+git checkout -b feature/new-level-find-command
+
+<span class="comment"># 3. Make your changes</span>
+<span class="comment"># - Add new level or command</span>
+<span class="comment"># - Test thoroughly</span>
+<span class="comment"># - Update documentation if needed</span>
+
+<span class="comment"># 4. Commit with descriptive message</span>
+git add .
+git commit -m <span class="string">"Add level 17: Find character command (f)"</span>
+
+<span class="comment"># 5. Push and create pull request</span>
+git push origin feature/new-level-find-command</pre>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 1rem;">PR Requirements</h3>
+                    <ul>
+                        <li>✅ Clear description of changes</li>
+                        <li>✅ Manual testing completed</li>
+                        <li>✅ No breaking changes to existing levels</li>
+                        <li>✅ Code follows existing style conventions</li>
+                        <li>✅ Documentation updated if needed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="section bg-alt">
+        <div class="container text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="logo-icon" style="margin-right: 0.75rem;">V</div>
+                <span style="font-size: 1.25rem; font-weight: bold;">VimMaster</span>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Developer Documentation</p>
+            
+            <!-- Navigation Links -->
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="https://github.com/renzorlive/vimmaster" class="nav-link">GitHub Repository</a>
+                <a href="index.html" class="nav-link">Game Documentation</a>
+                <a href="levels.html" class="nav-link">Levels Guide</a>
+                <a href="commands.html" class="nav-link">Command Reference</a>
+            </div>
+            
+            <!-- Donation Section -->
+            <div class="footer-donations">
+                <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">
+                    ❤️ Support VimMaster
+                </h3>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.875rem;">
+                    Help keep this project alive and growing with your support!
+                </p>
+                
+                <div class="donation-grid">
+                    <a href="https://github.com/sponsors/renzorlive" class="donation-btn github" title="GitHub Sponsors">
+                        <img src="img/github-142-svgrepo-com.svg" width="18" height="18" alt="GitHub">
+                        <span>Sponsor</span>
+                    </a>
+                    <a href="https://ko-fi.com/vimmaster" class="donation-btn kofi" title="Ko-fi">
+                        <img src="img/kofi-svgrepo-com.svg" width="18" height="18" alt="Ko-fi">
+                        <span>Ko-fi</span>
+                    </a>
+                    <a href="https://buymeacoffee.com/vimmaster" class="donation-btn coffee" title="Buy Me Coffee">
+                        <img src="img/buy-me-a-coffee-svgrepo-com.svg" width="18" height="18" alt="Buy Me Coffee">
+                        <span>Coffee</span>
+                    </a>
+                    <a href="https://patreon.com/vimmaster" class="donation-btn patreon" title="Patreon">
+                        <img src="img/patreon-141-svgrepo-com.svg" width="18" height="18" alt="Patreon">
+                        <span>Patreon</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem;">
+                <p>© 2025 VimMaster. Made with ❤️ for the developer community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

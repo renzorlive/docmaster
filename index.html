@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>VimMaster Documentation - Interactive Vim Learning Game</title>
+    <meta name="description" content="Learn Vim commands through an interactive browser-based game. 16 levels, progress tracking, and real Vim behavior.">
+    
+    <!-- SEO & Social Meta Tags -->
+    <meta property="og:title" content="VimMaster Documentation - Interactive Vim Learning">
+    <meta property="og:description" content="Complete documentation for VimMaster - the interactive Vim learning game with API reference and developer guides.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vim-master.com">
+    <meta property="og:image" content="https://vim-master.com/img/vimmaster-og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VimMaster Documentation">
+    <meta name="twitter:description" content="Interactive Vim learning game documentation and API reference">
+    <meta name="author" content="VimMaster Team">
+    <meta name="keywords" content="vim, editor, learning, game, interactive, documentation, api, developer">
+    
+    <!-- Performance Optimizations -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    
+    <!-- Accessibility -->
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#22c55e">
+</head>
+<body>
+    <!-- Skip Navigation -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    
+    <!-- Command Palette -->
+    <div id="command-palette" class="command-palette" role="dialog" aria-hidden="true">
+        <div class="command-palette-backdrop"></div>
+        <div class="command-palette-content">
+            <input type="text" id="command-input" placeholder="Search documentation..." class="command-input">
+            <div id="command-results" class="command-results"></div>
+        </div>
+    </div>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">VIM</div>
+                <div>
+                    <div class="vim-logo">VimMaster</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">Documentation</div>
+                </div>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="levels.html" class="nav-link">Levels</a>
+                <a href="commands.html" class="nav-link">Commands</a>
+                <a href="api.html" class="nav-link">API</a>
+                <a href="https://github.com/renzorlive/vimmaster" class="btn btn-primary nav-btn">Play Game</a>
+                <a href="https://github.com/sponsors/renzorlive" class="btn btn-sponsor nav-btn" title="Support VimMaster">
+                    <img src="img/github-142-svgrepo-com.svg" width="16" height="16" alt="GitHub">
+                </a>
+                <button id="theme-toggle" class="btn btn-secondary nav-btn">🌙</button>
+            </div>
+            
+            <button id="mobile-menu-btn" class="mobile-menu-btn btn btn-secondary">☰</button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-header">
+            <h2>Navigation</h2>
+            <button id="mobile-close" class="btn btn-secondary">✕</button>
+        </div>
+        <nav>
+            <a href="#features" class="nav-link">📋 Features</a>
+            <a href="levels.html" class="nav-link">🎯 Levels</a>
+            <a href="commands.html" class="nav-link">⌨️ Commands</a>
+            <a href="api.html" class="nav-link">📚 API</a>
+            <a href="https://github.com/renzorlive/vimmaster" class="btn btn-primary">🎮 Play Game</a>
+        </nav>
+    </div>
+
+    <!-- Hero -->
+    <main id="main-content">
+    <section class="hero">
+        <div class="container">
+            <pre class="ascii-logo">
+██╗   ██╗██╗███╗   ███╗    ███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ 
+██║   ██║██║████╗ ████║    ████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗
+██║   ██║██║██╔████╔██║    ██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝
+╚██╗ ██╔╝██║██║╚██╔╝██║    ██║╚██╔╝██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗
+ ╚████╔╝ ██║██║ ╚═╝ ██║    ██║ ╚═╝ ██║██║  ██║███████║   ██║   ███████╗██║  ██║
+  ╚═══╝  ╚═╝╚═╝     ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+            </pre>
+            <h1 class="hero-title holographic">Developer Documentation</h1>
+            <p class="hero-subtitle">
+                Complete documentation for VimMaster - the interactive Vim learning game. 
+                API reference, contribution guide, and technical details for developers.
+            </p>
+            <div class="hero-buttons">
+                <a href="api.html" class="btn btn-primary">📚 API Documentation</a>
+                <a href="https://github.com/renzorlive/vimmaster" class="btn btn-secondary">🔗 GitHub Repository</a>
+            </div>
+            
+            <!-- Social Proof -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
+                    </svg>
+                    <span class="stat-number" data-count="2500">0</span>
+                    <span class="stat-label">Stars</span>
+                </div>
+                <div class="stat-card">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16,4C15.71,4 15.43,4.09 15.21,4.29L13.85,5.64L18.36,10.15L19.71,8.79C20.1,8.4 20.1,7.77 19.71,7.38L16.62,4.29C16.4,4.09 16.11,4 15.83,4H16M13.13,6.36L4,15.5V20H8.5L17.64,10.87L13.13,6.36Z"/>
+                    </svg>
+                    <span class="stat-number" data-count="150">0</span>
+                    <span class="stat-label">Contributors</span>
+                </div>
+                <div class="stat-card">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                    </svg>
+                    <span class="stat-number" data-count="10000">0</span>
+                    <span class="stat-label">Users</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="section bg-alt">
+        <div class="container">
+            <h2 class="text-center mb-8" style="font-size: 2.5rem; font-weight: bold;">Project Overview</h2>
+            <div class="grid grid-2" style="align-items: center;">
+                <div>
+                    <p style="font-size: 1.125rem; margin-bottom: 1.5rem;">
+                        VimMaster is an open-source, browser-based Vim learning platform built with vanilla JavaScript. 
+                        The codebase is designed for extensibility and educational purposes.
+                    </p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">✅ <strong>Vanilla JavaScript</strong> - No frameworks, easy to understand and modify</li>
+                        <li style="margin-bottom: 0.5rem;">✅ <strong>Modular Architecture</strong> - Clean separation of game logic and UI</li>
+                        <li style="margin-bottom: 0.5rem;">✅ <strong>Extensible API</strong> - Add custom levels and commands easily</li>
+                        <li style="margin-bottom: 0.5rem;">✅ <strong>Educational Focus</strong> - Well-documented code for learning</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem; font-weight: bold;">Quick Setup</h3>
+                    <div class="code-block" style="margin-bottom: 1rem;">
+<p>git clone https://github.com/renzorlive/vimmaster.git</p>
+<p>cd vimmaster</p>
+<p># Serve locally</p>
+<p>python -m http.server 8000</p>
+<p># or</p>
+<p>npx serve .</p>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">
+                        No build process required. Pure HTML/CSS/JS that runs in any modern browser.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer Features -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="text-center mb-8" style="font-size: 2.5rem; font-weight: bold;">Developer Features</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card card-3d morph-shape">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        <h3>API Documentation</h3>
+                    </div>
+                    <p>Complete reference with interactive examples</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95"></div>
+                        <span class="skill-text">95% Complete</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card card-3d morph-shape neon-glow">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+                        </svg>
+                        <h3>Developer Tools</h3>
+                    </div>
+                    <p>Modular architecture for easy extension</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="88"></div>
+                        <span class="skill-text">88% Modular</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card card-3d morph-shape">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8,3A2,2 0 0,0 6,5V9A2,2 0 0,1 4,11H3V13H4A2,2 0 0,1 6,15V19A2,2 0 0,0 8,21H10V19H8V14A2,2 0 0,0 6,12A2,2 0 0,0 8,10V5H10V3M16,3A2,2 0 0,1 18,5V9A2,2 0 0,0 20,11H21V13H20A2,2 0 0,0 18,15V19A2,2 0 0,1 16,21H14V19H16V14A2,2 0 0,1 18,12A2,2 0 0,1 16,10V5H14V3H16Z"/>
+                        </svg>
+                        <h3>Code Examples</h3>
+                    </div>
+                    <p>Real snippets from VimMaster codebase</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="92"></div>
+                        <span class="skill-text">92% Coverage</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card card-3d morph-shape">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                        </svg>
+                        <h3>Command Reference</h3>
+                    </div>
+                    <p>Searchable Vim commands database</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="100"></div>
+                        <span class="skill-text">100% Searchable</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card card-3d morph-shape">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/>
+                        </svg>
+                        <h3>Learning Path</h3>
+                    </div>
+                    <p>16 progressive levels with explanations</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                        <span class="skill-text">12/16 Levels</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card card-3d morph-shape">
+                    <div class="feature-header">
+                        <svg class="feature-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"/>
+                        </svg>
+                        <h3>Community</h3>
+                    </div>
+                    <p>Active contributors and support</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                        <span class="skill-text">150+ Contributors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Sections -->
+    <section class="section bg-alt">
+        <div class="container">
+            <h2 class="text-center mb-8" style="font-size: 2.5rem; font-weight: bold;">Documentation Sections</h2>
+            
+            <div class="grid grid-2" style="gap: 2rem;">
+                <div class="card">
+                    <h3 style="font-weight: bold; margin-bottom: 1rem; color: var(--primary);">API Reference</h3>
+                    <p style="margin-bottom: 1rem; color: var(--text-muted);">Complete technical documentation for developers</p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 0.5rem;">• Game State Management</li>
+                        <li style="margin-bottom: 0.5rem;">• Level Creation API</li>
+                        <li style="margin-bottom: 0.5rem;">• Command System</li>
+                        <li style="margin-bottom: 0.5rem;">• Event Handling</li>
+                    </ul>
+                    <a href="api.html" class="btn btn-primary">View API Docs</a>
+                </div>
+                
+                <div class="card">
+                    <h3 style="font-weight: bold; margin-bottom: 1rem; color: var(--primary);">Command Reference</h3>
+                    <p style="margin-bottom: 1rem; color: var(--text-muted);">Searchable Vim command database with examples</p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 0.5rem;">• Movement Commands</li>
+                        <li style="margin-bottom: 0.5rem;">• Editing Operations</li>
+                        <li style="margin-bottom: 0.5rem;">• Search & Replace</li>
+                        <li style="margin-bottom: 0.5rem;">• Advanced Features</li>
+                    </ul>
+                    <a href="commands.html" class="btn btn-primary">Browse Commands</a>
+                </div>
+                
+                <div class="card">
+                    <h3 style="font-weight: bold; margin-bottom: 1rem; color: var(--primary);">Levels Guide</h3>
+                    <p style="margin-bottom: 1rem; color: var(--text-muted);">Detailed breakdown of all 16 learning levels</p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 0.5rem;">• Progressive Learning Path</li>
+                        <li style="margin-bottom: 0.5rem;">• Command Examples</li>
+                        <li style="margin-bottom: 0.5rem;">• Real-world Usage</li>
+                        <li style="margin-bottom: 0.5rem;">• Memory Techniques</li>
+                    </ul>
+                    <a href="levels.html" class="btn btn-primary">View Levels</a>
+                </div>
+                
+                <div class="card">
+                    <h3 style="font-weight: bold; margin-bottom: 1rem; color: var(--primary);">GitHub Repository</h3>
+                    <p style="margin-bottom: 1rem; color: var(--text-muted);">Source code, issues, and contribution guidelines</p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 0.5rem;">• Source Code Access</li>
+                        <li style="margin-bottom: 0.5rem;">• Issue Tracking</li>
+                        <li style="margin-bottom: 0.5rem;">• Pull Requests</li>
+                        <li style="margin-bottom: 0.5rem;">• Release Notes</li>
+                    </ul>
+                    <a href="https://github.com/renzorlive/vimmaster" class="btn btn-primary">View on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="section">
+        <div class="container text-center">
+            <h2 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 2rem;">Ready to Contribute?</h2>
+            <p style="font-size: 1.125rem; margin-bottom: 2rem; color: var(--text-muted);">
+                VimMaster is open source and welcomes contributions. Whether you're fixing bugs, 
+                adding features, or improving documentation, your help is appreciated.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="api.html" class="btn btn-primary" style="font-size: 1.125rem; padding: 1rem 2rem;">
+                    📚 Read API Docs
+                </a>
+                <a href="https://github.com/renzorlive/vimmaster" class="btn btn-secondary" style="font-size: 1.125rem; padding: 1rem 2rem;">
+                    🔗 Fork on GitHub
+                </a>
+            </div>
+            
+            <!-- Sponsor CTA -->
+            <div class="sponsor-cta">
+                <h3>❤️ Love VimMaster?</h3>
+                <p>Help keep this project alive and growing with your support!</p>
+                <div class="sponsor-grid">
+                    <a href="https://github.com/sponsors/renzorlive" class="sponsor-card github">
+                        <div class="sponsor-icon">
+                            <img src="img/github-142-svgrepo-com.svg" width="24" height="24" alt="GitHub">
+                        </div>
+                        <div class="sponsor-text">
+                            <strong>GitHub Sponsors</strong>
+                            <span>Monthly support</span>
+                        </div>
+                    </a>
+                    <a href="https://ko-fi.com/vimmaster" class="sponsor-card kofi">
+                        <div class="sponsor-icon">
+                            <img src="img/kofi-svgrepo-com.svg" width="24" height="24" alt="Ko-fi">
+                        </div>
+                        <div class="sponsor-text">
+                            <strong>Ko-fi</strong>
+                            <span>One-time donation</span>
+                        </div>
+                    </a>
+                    <a href="https://buymeacoffee.com/vimmaster" class="sponsor-card coffee">
+                        <div class="sponsor-icon">
+                            <img src="img/buy-me-a-coffee-svgrepo-com.svg" width="24" height="24" alt="Buy Me Coffee">
+                        </div>
+                        <div class="sponsor-text">
+                            <strong>Buy Me Coffee</strong>
+                            <span>Support development</span>
+                        </div>
+                    </a>
+                    <a href="https://patreon.com/vimmaster" class="sponsor-card patreon">
+                        <div class="sponsor-icon">
+                            <img src="img/patreon-141-svgrepo-com.svg" width="24" height="24" alt="Patreon">
+                        </div>
+                        <div class="sponsor-text">
+                            <strong>Patreon</strong>
+                            <span>Exclusive perks</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="section bg-alt">
+        <div class="container text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="logo-icon" style="margin-right: 0.75rem;">V</div>
+                <span style="font-size: 1.25rem; font-weight: bold;">VimMaster</span>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Interactive Vim Learning Game</p>
+            
+            <!-- Navigation Links -->
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="https://github.com/renzorlive/vimmaster" class="nav-link">GitHub Repository</a>
+                <a href="levels.html" class="nav-link">Levels Guide</a>
+                <a href="commands.html" class="nav-link">Command Reference</a>
+                <a href="api.html" class="nav-link">Developer API</a>
+            </div>
+            
+            <!-- Donation Section -->
+            <div class="footer-donations">
+                <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">
+                    ❤️ Support VimMaster
+                </h3>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.875rem;">
+                    Help keep this project alive and growing with your support!
+                </p>
+                
+                <div class="donation-grid">
+                    <a href="https://github.com/sponsors/renzorlive" class="donation-btn github" title="GitHub Sponsors">
+                        <img src="img/github-142-svgrepo-com.svg" width="18" height="18" alt="GitHub">
+                        <span>Sponsor</span>
+                    </a>
+                    <a href="https://ko-fi.com/vimmaster" class="donation-btn kofi" title="Ko-fi">
+                        <img src="img/kofi-svgrepo-com.svg" width="18" height="18" alt="Ko-fi">
+                        <span>Ko-fi</span>
+                    </a>
+                    <a href="https://buymeacoffee.com/vimmaster" class="donation-btn coffee" title="Buy Me Coffee">
+                        <img src="img/buy-me-a-coffee-svgrepo-com.svg" width="18" height="18" alt="Buy Me Coffee">
+                        <span>Coffee</span>
+                    </a>
+                    <a href="https://patreon.com/vimmaster" class="donation-btn patreon" title="Patreon">
+                        <img src="img/patreon-141-svgrepo-com.svg" width="18" height="18" alt="Patreon">
+                        <span>Patreon</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem;">
+                <p>© 2025 VimMaster. Made with ❤️ for the developer community.</p>
+            </div>
+        </div>
+    </footer>
+
+    </main>
+    
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+    
+    <!-- Newsletter Modal -->
+    <div id="newsletter-modal" class="newsletter-modal" role="dialog" aria-hidden="true">
+        <div class="newsletter-backdrop"></div>
+        <div class="newsletter-content">
+            <button class="newsletter-close" aria-label="Close newsletter signup">×</button>
+            <h3>Stay Updated with VimMaster</h3>
+            <p>Get the latest updates, tutorials, and tips delivered to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/advanced.js"></script>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "VimMaster",
+        "description": "Interactive Vim learning game with 16 progressive levels",
+        "url": "https://vim-master.com",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "VimMaster Team"
+        }
+    }
+    </script>
+</body>
+</html>

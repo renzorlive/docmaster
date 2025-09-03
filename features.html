@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - VimMaster Documentation</title>
+    <meta name="description" content="Explore the powerful features of VimMaster - the interactive game that teaches Vim through engaging gameplay.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #e5e7eb;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #1f2937;
+            --bg-secondary: #111827;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border: #374151;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        body {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Animation styles */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .animate-slide-in {
+            animation: slideInRight 0.8s ease forwards;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+        
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+        
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+        
+        .bg-white, .bg-gray-50 {
+            background-color: var(--bg-primary);
+        }
+        
+        .text-gray-900 {
+            color: var(--text-primary);
+        }
+        
+        .text-gray-600, .text-gray-500 {
+            color: var(--text-secondary);
+        }
+        
+        .border-b, .border-t {
+            border-color: var(--border);
+        }
+        
+        .shadow-sm {
+            box-shadow: 0 1px 2px var(--shadow);
+        }
+        
+        /* Theme toggle styles */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu-button {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--bg-primary);
+            z-index: 50;
+            padding: 1.5rem;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            box-shadow: -2px 0 10px var(--shadow);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            margin-top: 3rem;
+        }
+        
+        .mobile-menu-links a {
+            padding: 0.75rem 0;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            font-size: 1.125rem;
+        }
+        
+        .mobile-menu-links a:last-child {
+            border-bottom: none;
+        }
+        
+        .font-mono { font-family: 'Fira Code', monospace; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        .code-block { background: #1e293b; color: #e2e8f0; border-radius: 8px; overflow-x: auto; }
+        .feature-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .feature-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-yellow-500 text-xs font-mono font-bold">VIM<br>MASTER</a>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Features</h1>
+                        <p class="text-sm text-gray-500">Explore VimMaster's Powerful Capabilities</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <nav class="hidden md:flex space-x-6 mr-4">
+                        <a href="index.html" class="text-gray-600 hover:text-blue-600 transition-colors">Home</a>
+                        <a href="levels.html" class="text-gray-600 hover:text-blue-600 transition-colors">Levels</a>
+                        <a href="commands.html" class="text-gray-600 hover:text-blue-600 transition-colors">Commands</a>
+                        <a href="api.html" class="text-gray-600 hover:text-blue-600 transition-colors">API</a>
+                        <a href="https://github.com/renzorlive/vimmaster" class="text-gray-600 hover:text-blue-600 transition-colors">GitHub</a>
+                    </nav>
+                    <!-- Theme toggle button -->
+                    <button id="theme-toggle" class="theme-toggle flex items-center justify-center mr-4" aria-label="Toggle dark mode">
+                        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+                        </svg>
+                        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                        </svg>
+                    </button>
+                    <!-- Mobile menu button -->
+                    <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open mobile menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile menu overlay -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close mobile menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="mobile-menu-links">
+            <a href="index.html" class="hover:text-blue-600 transition-colors duration-300">Home</a>
+            <a href="levels.html" class="hover:text-blue-600 transition-colors duration-300">Levels</a>
+            <a href="commands.html" class="hover:text-blue-600 transition-colors duration-300">Commands</a>
+            <a href="api.html" class="hover:text-blue-600 transition-colors duration-300">API</a>
+            <a href="https://github.com/renzorlive/vimmaster" class="font-medium bg-gray-800 text-white hover:bg-gray-700 px-4 py-2 rounded-md transition-colors duration-300">GitHub</a>
+            <div class="flex items-center mt-4 pt-4 border-t border-gray-200">
+                <span class="mr-3 text-sm font-medium">Toggle Dark Mode</span>
+                <button id="mobile-theme-toggle" class="theme-toggle flex items-center justify-center" aria-label="Toggle dark mode">
+                    <svg id="mobile-sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+                    </svg>
+                    <svg id="mobile-moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12 animate-fade-in">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">VimMaster Features</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Discover the powerful features that make VimMaster the ultimate Vim learning platform.
+                From progress tracking to challenge modes, we've designed every feature to accelerate your Vim mastery.
+            </p>
+        </div>
+
+        <!-- Features Overview -->
+        <div class="bg-white rounded-lg shadow-sm p-8 mb-12 animate-fade-in delay-100">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Core Features</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6 animate-fade-in delay-200">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-blue-50 rounded-lg p-6 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="text-blue-600 text-3xl mb-4">🎮</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Interactive Gameplay</h3>
+                    <p class="text-gray-600">
+                        Learn Vim through engaging, game-based challenges that make mastering complex commands fun and rewarding.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-green-50 rounded-lg p-6 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="text-green-600 text-3xl mb-4">📊</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Progress Tracking</h3>
+                    <p class="text-gray-600">
+                        Track your learning journey with detailed statistics, completion rates, and performance metrics.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-purple-50 rounded-lg p-6 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="text-purple-600 text-3xl mb-4">🏆</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Achievement System</h3>
+                    <p class="text-gray-600">
+                        Earn badges and unlock achievements as you master different Vim skills and complete challenges.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Features -->
+        <div class="space-y-12 animate-fade-in delay-300">
+            <!-- Progress System -->
+            <section id="progress-system" class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6">
+                    <h2 class="text-2xl font-bold">Progress System</h2>
+                    <p class="text-blue-100">Track your Vim learning journey with detailed metrics</p>
+                </div>
+                <div class="p-6">
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-gray-600 mb-4">
+                            VimMaster's progress system helps you track your learning journey with detailed metrics and visualizations.
+                            Monitor your improvement over time and identify areas where you need more practice.
+                        </p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-50 rounded-lg p-6 hover:bg-blue-50 transition-colors duration-300">
+                                <h4 class="font-semibold text-gray-900 mb-2">📈 Performance Metrics</h4>
+                                <p class="text-gray-600">Track your speed, accuracy, and efficiency for each command and level.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6 hover:bg-blue-50 transition-colors duration-300">
+                                <h4 class="font-semibold text-gray-900 mb-2">🔄 Sync Progress</h4>
+                                <p class="text-gray-600">Save your progress to the cloud and continue learning across devices.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6 hover:bg-blue-50 transition-colors duration-300">
+                                <h4 class="font-semibold text-gray-900 mb-2">📊 Detailed Analytics</h4>
+                                <p class="text-gray-600">View heatmaps of your most-used and least-used commands.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6 hover:bg-blue-50 transition-colors duration-300">
+                                <h4 class="font-semibold text-gray-900 mb-2">🎯 Personalized Recommendations</h4>
+                                <p class="text-gray-600">Get suggestions for levels and commands to practice based on your performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cheat Mode -->
+            <section id="cheat-mode" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6">
+                    <h2 class="text-2xl font-bold">Cheat Mode</h2>
+                    <p class="text-yellow-100">Get hints and help when you're stuck</p>
+                </div>
+                <div class="p-6">
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-gray-600 mb-4">
+                            Sometimes you need a little help to progress. VimMaster's Cheat Mode provides contextual hints
+                            and suggestions when you're stuck, without giving away the entire solution.
+                        </p>
+                        
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
+                            <h4 class="font-semibold text-yellow-900 mb-2">How Cheat Mode Works</h4>
+                            <ul class="text-yellow-800 space-y-2">
+                                <li>• Press <code class="bg-yellow-200 px-2 py-1 rounded">?</code> at any time to activate Cheat Mode</li>
+                                <li>• Get progressive hints that guide you toward the solution</li>
+                                <li>• View animated demonstrations of the correct commands</li>
+                                <li>• Access relevant documentation for the current challenge</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Page -->
+            <section id="profile-page" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6">
+                    <h2 class="text-2xl font-bold">Profile Page</h2>
+                    <p class="text-green-100">Showcase your Vim mastery and achievements</p>
+                </div>
+                <div class="p-6">
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-gray-600 mb-4">
+                            Your VimMaster profile page is a showcase of your Vim journey. Display your achievements,
+                            track your progress, and compare your skills with friends and the community.
+                        </p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">🏆 Achievement Showcase</h4>
+                                <p class="text-gray-600">Display badges and trophies earned through gameplay.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">📈 Skill Radar</h4>
+                                <p class="text-gray-600">Visualize your strengths across different Vim skill categories.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">🔍 Command Mastery</h4>
+                                <p class="text-gray-600">See which commands you've mastered and which need practice.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">⏱️ Speed Metrics</h4>
+                                <p class="text-gray-600">Track your typing speed and command execution efficiency.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Social Sharing -->
+            <section id="social-sharing" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6">
+                    <h2 class="text-2xl font-bold">Social Sharing</h2>
+                    <p class="text-purple-100">Share your achievements and challenge friends</p>
+                </div>
+                <div class="p-6">
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-gray-600 mb-4">
+                            Learning is more fun with friends! VimMaster's social features let you share your achievements,
+                            challenge friends, and compete on leaderboards.
+                        </p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">🏅 Leaderboards</h4>
+                                <p class="text-gray-600">Compete with friends and the global community on various metrics.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">🔗 Shareable Achievements</h4>
+                                <p class="text-gray-600">Generate beautiful cards to share your achievements on social media.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">👥 Friend Challenges</h4>
+                                <p class="text-gray-600">Create custom challenges and invite friends to compete.</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-2">📱 Social Integration</h4>
+                                <p class="text-gray-600">Connect with Twitter, GitHub, and other platforms to find friends.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- JavaScript for navigation highlighting -->
+    <script>
+        // Highlight active navigation links
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+
+            function highlightNavigation() {
+                let scrollY = window.pageYOffset;
+                
+                sections.forEach(current => {
+                    const sectionHeight = current.offsetHeight;
+                    const sectionTop = current.offsetTop - 100;
+                    const sectionId = current.getAttribute('id');
+                    
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('text-blue-600');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('text-blue-600');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', highlightNavigation);
+            highlightNavigation(); // Initial call
+        });
+    </script>
+    <!-- JavaScript for theme toggle and mobile menu -->
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const mobileSunIcon = document.getElementById('mobile-sun-icon');
+        const mobileMoonIcon = document.getElementById('mobile-moon-icon');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        
+        // Function to set the theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.querySelectorAll('#sun-icon, #mobile-sun-icon').forEach(icon => {
+                    if (icon) icon.classList.add('hidden');
+                });
+                document.querySelectorAll('#moon-icon, #mobile-moon-icon').forEach(icon => {
+                    if (icon) icon.classList.remove('hidden');
+                });
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                document.querySelectorAll('#sun-icon, #mobile-sun-icon').forEach(icon => {
+                    if (icon) icon.classList.remove('hidden');
+                });
+                document.querySelectorAll('#moon-icon, #mobile-moon-icon').forEach(icon => {
+                    if (icon) icon.classList.add('hidden');
+                });
+            }
+            localStorage.setItem('theme', theme);
+        }
+        
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setTheme('dark');
+        }
+        
+        // Toggle theme when button is clicked
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    setTheme('light');
+                } else {
+                    setTheme('dark');
+                }
+            });
+        }
+        
+        // Mobile theme toggle
+        if (mobileThemeToggle) {
+            mobileThemeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    setTheme('light');
+                } else {
+                    setTheme('dark');
+                }
+            });
+        }
+        
+        // Function to close mobile menu
+        function closeMobileMenu() {
+            if (mobileMenu && mobileMenuOverlay) {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+        
+        // Mobile menu toggle
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+            });
+        }
+        
+        // Close mobile menu
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+        }
+        
+        // Close mobile menu when clicking on overlay
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+        }
+        
+        // Close mobile menu when a link is clicked
+        if (mobileMenu) {
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        }
+    </script>
+</body>
+</html>
