@@ -238,6 +238,8 @@ class CommandPalette {
     }
 
     init() {
+        if (!this.palette || !this.input || !this.results) return;
+        
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                 e.preventDefault();
@@ -246,12 +248,14 @@ class CommandPalette {
             if (e.key === 'Escape') {
                 this.close();
             }
-            if (this.palette.classList.contains('active')) {
+            if (this.palette && this.palette.classList.contains('active')) {
                 this.handleKeyNavigation(e);
             }
         });
 
-        this.palette.querySelector('.command-palette-backdrop').addEventListener('click', () => this.close());
+        const backdrop = this.palette.querySelector('.command-palette-backdrop');
+        if (backdrop) backdrop.addEventListener('click', () => this.close());
+        
         this.input.addEventListener('input', (e) => this.search(e.target.value));
         this.input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
@@ -529,6 +533,8 @@ class ToastManager {
     }
 
     show(message, type = 'success', duration = 3000) {
+        if (!this.container) return;
+        
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
         toast.textContent = message;
@@ -547,11 +553,14 @@ class ToastManager {
 class NewsletterModal {
     constructor() {
         this.modal = document.getElementById('newsletter-modal');
+        if (!this.modal) return;
         this.form = this.modal.querySelector('.newsletter-form');
         this.init();
     }
 
     init() {
+        if (!this.modal || !this.form) return;
+        
         // Show after 30 seconds if not shown before
         setTimeout(() => {
             if (!localStorage.getItem('newsletter-shown')) {
@@ -559,8 +568,11 @@ class NewsletterModal {
             }
         }, 30000);
 
-        this.modal.querySelector('.newsletter-close').addEventListener('click', () => this.close());
-        this.modal.querySelector('.newsletter-backdrop').addEventListener('click', () => this.close());
+        const closeBtn = this.modal.querySelector('.newsletter-close');
+        const backdrop = this.modal.querySelector('.newsletter-backdrop');
+        
+        if (closeBtn) closeBtn.addEventListener('click', () => this.close());
+        if (backdrop) backdrop.addEventListener('click', () => this.close());
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
     }
 
@@ -607,36 +619,21 @@ class DynamicSocialProof {
 
     async fetchRealData() {
         try {
-            // Option 1: Use your own API endpoint (recommended)
-            const response = await fetch('/api/stats');
-            const data = await response.json();
+            const [repoResponse, contributorsResponse] = await Promise.all([
+                fetch('https://api.github.com/repos/renzorlive/vimmaster'),
+                fetch('https://api.github.com/repos/renzorlive/vimmaster/contributors')
+            ]);
             
-            // Update elements with real data
-            this.updateCounter('[data-count="2500"]', data.stars);
-            this.updateCounter('[data-count="150"]', data.contributors);
-            this.updateCounter('[data-count="10000"]', data.users);
-            
-        } catch (error) {
-            console.log('API failed, trying GitHub directly:', error);
-            
-            // Option 2: Fallback to GitHub API directly
-            try {
-                const [repoResponse, contributorsResponse] = await Promise.all([
-                    fetch('https://api.github.com/repos/renzorlive/vimmaster'),
-                    fetch('https://api.github.com/repos/renzorlive/vimmaster/contributors')
-                ]);
-                
+            if (repoResponse.ok && contributorsResponse.ok) {
                 const repoData = await repoResponse.json();
                 const contributors = await contributorsResponse.json();
                 
                 this.updateCounter('[data-count="2500"]', repoData.stargazers_count);
                 this.updateCounter('[data-count="150"]', contributors.length);
                 this.updateCounter('[data-count="10000"]', Math.floor(repoData.stargazers_count * 4.2));
-                
-            } catch (fallbackError) {
-                console.log('Using static fallback numbers');
-                // Keep original static numbers
             }
+        } catch (error) {
+            console.log('Using static fallback numbers:', error);
         }
     }
     
@@ -692,6 +689,73 @@ class SkillBarAnimation {
     }
 }
 
+// Footer Component Loader
+class FooterLoader {
+    constructor() {
+        this.loadFooter();
+    }
+
+    async loadFooter() {
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (!footerPlaceholder) return;
+
+        try {
+            const response = await fetch('./components/footer.html');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const footerHTML = await response.text();
+            footerPlaceholder.innerHTML = footerHTML;
+        } catch (error) {
+            console.error('Failed to load footer component:', error);
+            // Fallback: create a simple footer inline
+            footerPlaceholder.innerHTML = `
+                <footer class="section bg-alt">
+                    <div class="container text-center">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="logo-icon" style="margin-right: 0.75rem;">V</div>
+                            <span style="font-size: 1.25rem; font-weight: bold;">VimMaster</span>
+                        </div>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Interactive Vim Learning Game</p>
+                        <div class="flex justify-center flex-wrap gap-2 mb-6">
+                            <a href="index.html" class="nav-link" style="font-size: 0.875rem; padding: 0.5rem 0.75rem;">Home</a>
+                            <a href="levels.html" class="nav-link" style="font-size: 0.875rem; padding: 0.5rem 0.75rem;">Levels</a>
+                            <a href="commands.html" class="nav-link" style="font-size: 0.875rem; padding: 0.5rem 0.75rem;">Commands</a>
+                            <a href="api.html" class="nav-link" style="font-size: 0.875rem; padding: 0.5rem 0.75rem;">API</a>
+                            <a href="https://github.com/renzorlive/vimmaster" class="nav-link" style="font-size: 0.875rem; padding: 0.5rem 0.75rem;">GitHub</a>
+                        </div>
+                        <div class="footer-donations">
+                            <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">❤️ Support VimMaster</h3>
+                            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.875rem;">Help keep this project alive and growing!</p>
+                            <div class="donation-grid">
+                                <a href="https://github.com/sponsors/renzorlive" class="donation-btn github" title="GitHub Sponsors">
+                                    <img src="img/github-142-svgrepo-com.svg" width="18" height="18" alt="GitHub">
+                                    <span>Sponsor</span>
+                                </a>
+                                <a href="https://ko-fi.com/renzor" class="donation-btn kofi" title="Ko-fi">
+                                    <img src="img/kofi-svgrepo-com.svg" width="18" height="18" alt="Ko-fi">
+                                    <span>Ko-fi</span>
+                                </a>
+                                <a href="https://buymeacoffee.com/renzorlive" class="donation-btn coffee" title="Buy Me Coffee">
+                                    <img src="img/buy-me-a-coffee-svgrepo-com.svg" width="18" height="18" alt="Buy Me Coffee">
+                                    <span>Coffee</span>
+                                </a>
+                                <a href="https://patreon.com/renzor" class="donation-btn patreon" title="Patreon">
+                                    <img src="img/patreon-141-svgrepo-com.svg" width="18" height="18" alt="Patreon">
+                                    <span>Patreon</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem;">
+                            <p>© 2025 VimMaster. Made with ❤️ for the developer community.</p>
+                        </div>
+                    </div>
+                </footer>
+            `;
+        }
+    }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
@@ -703,6 +767,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new NewsletterModal();
     new DynamicSocialProof();
     new SkillBarAnimation();
+    new FooterLoader();
     
     // Show welcome toast
     setTimeout(() => {
